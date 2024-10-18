@@ -3,8 +3,20 @@ const app = createApp({
   data() {
     return {
       produtos: [],
-      produto: false
+      produto: false,
+      carrinho: [],
     };
+  },
+  computed: {
+    carrinhoTotal() {
+    let total = 0;
+    if(this.carrinho.length) {
+      this.carrinho.forEach(item => {
+        total += item.preco;
+      })
+    }
+    return total;  
+    },
   },
   methods: {
     fetchProdutos() {
@@ -32,6 +44,16 @@ const app = createApp({
       if (event.target === event.currentTarget) {
         this.produto = false
       }
+    },
+    adicionarItem() {
+      if(this.produto.estoque > 0) {
+        this.produto.estoque--;
+        const { id, nome, preco } = this.produto;
+        this.carrinho.push({ id, nome, preco });
+      }
+    },
+    removerItem(index) {
+      this.carrinho.splice(index, 1);
     }
   },
   created() {

@@ -14,6 +14,18 @@
 
   <body>
     <div id="app">
+      <header class="header">
+        <img  class="logo" src="./assets/techno.svg" alt="Techno">
+        <div class="carrinho-menu">{{ numeroPreco(carrinhoTotal) }} | {{ carrinho.length }}</div>
+        <ul>
+          <li v-for="(item, index) in carrinho" :key="item.id">
+            <p>{{ item.nome }}</p>
+            <button @click="removerItem(index)">X</button>
+          </li>
+        </ul>
+      </header>
+
+
       <section class="produtos">
         <div v-for="item in produtos" @click="abrirModal(item.id)" :key="item.id" class="produto">
           <img :src="item.img" :alt="item.nome" class="produto-img">
@@ -35,7 +47,8 @@
             <span class="modal-preco">{{ numeroPreco(produto.preco) }}</span>
             <h2 class="modal-titulo">{{ produto.nome }}</h2>
             <p>{{ produto.descricao }}</p>
-            <button class="modal-btn">Adicionar iTem</button>
+            <button v-if="produto.estoque > 0" class="modal-btn" @click="adicionarItem">Adicionar iTem</button>
+            <button v-else class="modal-btn esgotado" disabled>Produto Esgotado</button>
           </div>
 
           <div class="avaliacoes">
