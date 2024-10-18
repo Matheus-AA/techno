@@ -54,9 +54,23 @@ const app = createApp({
     },
     removerItem(index) {
       this.carrinho.splice(index, 1);
-    }
+    },
+    checarLocalStorage() {
+      if(window.localStorage.carrinho) {
+        this.carrinho = JSON.parse(window.localStorage.carrinho)
+      }
+    },
+  },
+  watch: {
+    carrinho: {
+      handler() {
+        window.localStorage.carrinho = JSON.stringify(this.carrinho);
+      },
+      deep: true,
+    },
   },
   created() {
     this.fetchProdutos();
+    this.checarLocalStorage();
   },
 }).mount("#app");
