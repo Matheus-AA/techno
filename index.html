@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Noto+Serif:400,400i,700"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Techno</title>
+  </head>
+
+  <body>
+    <div id="app">
+      <section class="produtos">
+        <div v-for="item in produtos" @click="abrirModal(item.id)" :key="item.id" class="produto">
+          <img :src="item.img" :alt="item.nome" class="produto-img">
+          <div class="produto-info">
+            <span class="produto-preco">{{ numeroPreco(item.preco) }}</span>
+            <h2 class="produto-titulo">{{ item.nome }}</h2>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="modal" v-if="produto" @click="fecharModal">
+      <div class="modal-container">
+        <div class="modal-img">
+          <img :src="produto.img" :alt="produto.nome">
+        </div>
+
+        <div class="modal-dados">
+          <button class="modal-fechar" @click="produto = false">X</button>
+          <span class="modal-preco">{{ numeroPreco(produto.preco) }}</span>
+          <h2 class="modal-titulo">{{ produto.nome }}</h2>
+          <p>{{ produto.descricao }}</p>
+          <button class="modal-btn">Adicionar iTem</button>
+        </div>
+
+        <div class="avaliacoes">
+          <h2 class="avaliacoes-subtitulo">Availiações</h2>
+          <ul>
+            <li v-for="avaliacao in produto.reviews" class="avaliacao">
+              <p class="avaliacao-descricao">{{ avaliacao.descricao }}</p>
+              <p class="avaliacao-usuario">{{ avaliacao.nome}} | {{ avaliacao.estrelas }} Estrelas</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
