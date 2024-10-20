@@ -325,3 +325,71 @@ body {
   padding: 10px 25px;
   font-family: "Noto Serif";
 }
+
+/* RESPONSIVO */
+
+@media screen and (max-width: 900px) {
+  #app {
+    padding: 0px 10px;
+  }
+
+  .produtos {
+    margin-top: 40px;
+  }
+
+  .produto {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 300px;
+    margin: 30px auto;
+  }
+
+  .produto-info {
+    padding: 20px;
+  }
+
+  .produto-img {
+    max-width: 100%;
+  }
+
+  .produto-titulo {
+    font-size: 1.5rem;
+  }
+
+  .modal {
+    padding: 10px;
+  }
+
+  .modal-container {
+    grid-gap: 20px;
+    background: #ffffff;
+    padding: 10px 0px;
+  }
+
+  .modal-img {
+    grid-row: 2;
+  }
+
+  .modal-img img {
+    width: 100%;
+    max-width: initial;
+  }
+
+  .modal-dados {
+    grid-column: 1;
+    padding: 10px;
+  }
+
+  .modal-btn {
+    margin-top: 20px;
+  }
+
+  .avaliacoes {
+    grid-column: 1;
+    padding: 10px;
+  }
+
+  .carrinho-modal {
+    padding: 10px;
+  }
+}

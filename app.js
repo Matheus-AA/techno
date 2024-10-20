@@ -76,6 +76,10 @@ const app = createApp({
         this.alertaAtivo = false
       },1900)
     },
+    compararEstoque() {
+      const items = this.carrinho.filter(({id}) => id === this.produto.id)
+        this.produto.estoque -= items.length; // Use a computed property
+    },
     router() {
       const hash = document.location.hash
       if(hash) {
@@ -89,14 +93,16 @@ const app = createApp({
         document.title = this.produto.nome || "Techno";
         const hash = this.produto.id || "";
         history.pushState(null, null, `#${hash}`);
+        if (this.produto) {
+          this.compararEstoque();
+        }
       },
-      deep: true,
     },
     carrinho: {
       handler() {
         window.localStorage.carrinho = JSON.stringify(this.carrinho);
       },
-      deep: true,
+      deep: true, 
     },
   },
   created() {
