@@ -5,6 +5,9 @@ const app = createApp({
       produtos: [],
       produto: false,
       carrinho: [],
+      carrinhoAtivo: false,
+      mensagemAlerta: "Item adicionado",
+      alertaAtivo: false,
     };
   },
   computed: {
@@ -45,11 +48,17 @@ const app = createApp({
         this.produto = false
       }
     },
+    clickForaCarrinho(event) {
+      if (event.target === event.currentTarget) {
+        this.carrinhoAtivo = false
+      }
+    },
     adicionarItem() {
       if(this.produto.estoque > 0) {
         this.produto.estoque--;
         const { id, nome, preco } = this.produto;
         this.carrinho.push({ id, nome, preco });
+        this.alerta(`${nome} adicionado ao carrinho.`);
       }
     },
     removerItem(index) {
@@ -60,8 +69,29 @@ const app = createApp({
         this.carrinho = JSON.parse(window.localStorage.carrinho)
       }
     },
+    alerta(mensagem) {
+      this.mensagemAlerta = mensagem;
+      this.alertaAtivo = true
+      setTimeout(() => {
+        this.alertaAtivo = false
+      },1900)
+    },
+    router() {
+      const hash = document.location.hash
+      if(hash) {
+        this.fetchProduto(hash.replace("#", ""))
+      }
+    },
   },
   watch: {
+    produto: {
+      handler() {
+        document.title = this.produto.nome || "Techno";
+        const hash = this.produto.id || "";
+        history.pushState(null, null, `#${hash}`);
+      },
+      deep: true,
+    },
     carrinho: {
       handler() {
         window.localStorage.carrinho = JSON.stringify(this.carrinho);
@@ -71,6 +101,7 @@ const app = createApp({
   },
   created() {
     this.fetchProdutos();
+    this.router();
     this.checarLocalStorage();
   },
 }).mount("#app");
